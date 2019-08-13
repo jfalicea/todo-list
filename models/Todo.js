@@ -20,14 +20,10 @@ function getOne(id){
     }
 
  //SQL Query must be a string.  #pg-promise ANY RETURNS AN ARRAY OF OBJECTS. 
- function getAll(){
-    db.any(`
+function getAll(){
+    return db.any(`
     SELECT * FROM todos;
-    `)
-        .then((data)=>{       //THEN get the data back from the query. 
-            console.log(`here is the data:`);
-            console.log(data);  //pass the variable into to get the data!
-        })       
+    `)      
         .catch((err)=>{
                 console.log('err');
                 console.log(err);
