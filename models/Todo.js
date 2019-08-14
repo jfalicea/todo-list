@@ -2,15 +2,15 @@ const db = require('../db')
     
     //using pg-promise ONE and ONLY ONE.  RETURNS a single object. it'll error if: there is 0 items or MORE than 1.   This is good for getting unique items. 
 function getOne(id){    
-    db.one(`
+    return db.one(`
         SELECT * FROM todos
         WHERE id = $1                  
         `,[id]
     )
-            .then((data)=>{  //THEN get the data back from the query. 
-                console.log(`here is the data:`);
-                console.log(data);  //pass the variable into to get the data!
-            })       
+            // .then((data)=>{  //THEN get the data back from the query. 
+            //     console.log(`here is the data:`);
+            //     console.log(data);  //pass the variable into to get the data!
+            // })       
             .catch((err)=>{
                 console.log('err');
                 console.log("err Object: ", err)
