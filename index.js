@@ -36,6 +36,7 @@ app.get('/todos/:taskId', (req, res)=>{
         res.json(data)
     })
 });
+
 app.get('/todos',(request, response)=>{
     const allTodos = Todo.getAll()
     allTodos.then((data)=>{ 
@@ -44,6 +45,7 @@ app.get('/todos',(request, response)=>{
         response.json(data);
     })
 });
+
 app.listen(port);
 
 

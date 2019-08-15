@@ -34,7 +34,7 @@ module.exports={
 //if the key name is the same as the value you can just use the key. 
 //getAll : getAll ===>  this is called enhanced object literalsyntax. 
     getAll, 
-    getOne,
+    getOne
 }
 
     
