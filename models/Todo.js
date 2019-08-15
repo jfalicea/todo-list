@@ -2,24 +2,32 @@ const db = require('../db')
     
     //using pg-promise ONE and ONLY ONE.  RETURNS a single object. it'll error if: there is 0 items or MORE than 1.   This is good for getting unique items. 
 async function getOne(id){    
-    const oneTask = await db.one(`
-        SELECT * FROM todos
-        WHERE id = $1                  
-        `,[id]
-    )
-            // .then((data)=>{  //THEN get the data back from the query. 
-            //     console.log(`here is the data:`);
-            //     console.log(data);  //pass the variable into to get the data!
-            // })       
-        return oneTask
+     try{  
+        const oneTask = await db.one(`
+            SELECT * FROM todos
+            WHERE id = $1                  
+            `,[id])     
+            return oneTask
+        }
+    catch(error){
+        console.log('uh oh');
+        console.log(error);
+        return{}
     }
+ }
 
  //SQL Query must be a string.  #pg-promise ANY RETURNS AN ARRAY OF OBJECTS. 
 async function getAll(){
-    const allTasks = await db.any(`
-    SELECT * FROM todos;
-    `)      
-    return allTasks
+    try{
+        return allTasks = await db.any(`
+        SELECT * FROM todos;
+        `)      
+    }
+    catch(error){
+        console.log('uh ohfda');
+        console.log(error);
+        return []
+    }
 }
 
 module.exports={

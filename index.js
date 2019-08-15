@@ -29,8 +29,8 @@ const port = 3000;  //variable for the port number.
     
 
 app.get('/todos/:taskId', (req, res)=>{
-    console.log("you asked for specific task.")
-    console.log(req.params.taskId)
+    // console.log("you asked for specific task.")
+    // console.log(req.params.taskId)
     const theId = parseInt(req.params.taskId, 10);
     const aTodo =Todo.getOne(theId);
     aTodo.then((data)=>{
@@ -47,21 +47,22 @@ app.get('/todos',(request, response)=>{
     })
 });
 
-app.get('/users',(req, res)=>{
-    const allUsers = Users.getAll();
-    allUsers
-        .then((data)=>{
-            res.json(data);
-        })
+app.get('/users',async(req, res)=>{
+    const allUsers = await Users.getAll();
+    res.json(allUsers);
 });
-app.get('/users/:userId',(req, res)=>{
+app.get('/users/:userId',async (req, res)=>{
     const theId = parseInt(req.params.userId,10);
-    const aUser = Users.getOne(theId);
-    aUser
-        .then((data)=>{
-            res.json(data);
-        })
+    const aUser = await Users.getOne(theId);
+    res.json(aUser);
 });
+
+app.post('/users',(req, res)=>{
+    console.log('we got a post request!');
+    // .send() is DEFFERENT than .end()
+    res.send('good job');
+})
+
 
 app.listen(port);
 
