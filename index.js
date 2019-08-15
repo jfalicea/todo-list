@@ -23,6 +23,7 @@ HOW TO CREATE A SERVER WITHOUT EXPRESS.
 ------------------------------------------*/
 const express = require('express'); // replace http with 'express'
 const Todo = require('./models/Todo')
+const Users = require('./models/Users')
 const app = express();    //create the server and call it "app"  
 const port = 3000;  //variable for the port number. 
     
@@ -44,6 +45,22 @@ app.get('/todos',(request, response)=>{
         // response.end("Task: "+jsonData);
         response.json(data);
     })
+});
+
+app.get('/users',(req, res)=>{
+    const allUsers = Users.getAll();
+    allUsers
+        .then((data)=>{
+            res.json(data);
+        })
+});
+app.get('/users/:userId',(req, res)=>{
+    const theId = parseInt(req.params.userId,10);
+    const aUser = Users.getOne(theId);
+    aUser
+        .then((data)=>{
+            res.json(data);
+        })
 });
 
 app.listen(port);
