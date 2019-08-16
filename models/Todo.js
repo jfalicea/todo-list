@@ -29,12 +29,23 @@ async function getAll(){
         return []
     }
 }
-
+async function createTodo({priority,task,user_id}){
+    const newTodo = await db.one(`
+        INSERT INTO todos
+            (priority, task, user_id)
+        values ($1, $2, $3)
+        returning *
+    `, [priority, task, user_id])
+    console.log(newTodo);
+    return newTodo
+}
 module.exports={
 //if the key name is the same as the value you can just use the key. 
 //getAll : getAll ===>  this is called enhanced object literalsyntax. 
     getAll, 
-    getOne
+    getOne,
+    createTodo
 }
+
 
     

@@ -26,7 +26,22 @@ const Todo = require('./models/Todo')
 const Users = require('./models/Users')
 const app = express();    //create the server and call it "app"  
 const port = 3000;  //variable for the port number. 
-    
+// Use the urlencoded middleware to read POST bodies
+const {sanitizeBody} = require('express-validator');
+        // templating language. 
+const es6Renderer = require('express-es6-template-engine');
+app.engine('html', es6Renderer)
+app.set('views', 'views')
+    //Notes: consider learning ejs or pug for view engines!!
+app.set('view engine', 'html')
+
+app.use(express.urlencoded({extended: true}));    
+app.use((req, res, next)=>{
+    console.log('I AM MIDDLEWARE.');
+    console.log(req.url);
+    next()
+})
+
 
 app.get('/todos/:taskId', (req, res)=>{
     // console.log("you asked for specific task.")
@@ -57,12 +72,31 @@ app.get('/users/:userId',async (req, res)=>{
     res.json(aUser);
 });
 
-app.post('/users',(req, res)=>{
+app.post('/users', [
+    sanitizeBody('username').escape(),
+    sanitizeBody('displayname').escape()
+],async(req, res)=>{
     console.log('we got a post request!');
     // .send() is DEFFERENT than .end()
-    res.send('good job');
+    console.log('here is the body: ')
+    console.log(req.body);
+    
+    const newUserInfo = await Users.createUser(
+        // displayname: req.body.displayname,
+        // username: req.body.username
+        req.body
+        )
+    res.json(newUserInfo)
+    // res.send('good job');
 })
 
+app.post('/users/:userid/todos', async (req, res)=>{
+    console.log(req.params.userid)
+    req.body.user_id = req.params.userid
+    console.log("hello", req.body)
+    const newTask = await Todo.createTodo(req.body)
+    res.json(newTask)
+})
 
 app.listen(port);
 
