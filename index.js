@@ -26,27 +26,60 @@ const Todo = require('./models/Todo')
 const Users = require('./models/Users')
 const app = express();    //create the server and call it "app"  
 const port = 3000;  //variable for the port number. 
-// Use the urlencoded middleware to read POST bodies
+/*----------------
+sanitize information: 
+Use the urlencoded middleware to read POST bodies
+----------------*/    
 const {sanitizeBody} = require('express-validator');
         // templating language. 
 const es6Renderer = require('express-es6-template-engine');
 app.engine('html', es6Renderer)
-app.set('views', 'htmlFiles')
+app.set('views', 'views')
     //Notes: consider learning ejs or pug for view engines!!
 app.set('view engine', 'html')
+/*----------------
+static assets
+----------------*/
+app.use(express.static('public'));
 
+/*----------------
+template sites
+----------------*/
 app.get('/',(req,res)=>{
     res.render('index',{
         locals: {
             message: "Its time for lunch.",
         }, 
         partials: {
-            navbar: './navbar'
+            navbar: './navbar',
+            includes: './includes'
         }
     });
 })
 
+app.get('/profile',(req, res)=>{
+    res.render('profile',{
+        locals: {
+            displayname: 'Jonathan Alicea',
+            username: 'jfalicea'
 
+        },
+        partials:{
+            navbar:'./navbar',
+            includes: './includes'
+        }
+    })
+})
+
+app.use('/profile/todos',(req,res)=>{
+    res.render('todoPage', {
+        locals: {},
+        partials: {
+            navbar: './navbar',
+            includes: './includes'
+        }
+    })
+})
 
 app.use(express.urlencoded({extended: true}));    
 app.use((req, res, next)=>{
