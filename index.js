@@ -31,9 +31,22 @@ const {sanitizeBody} = require('express-validator');
         // templating language. 
 const es6Renderer = require('express-es6-template-engine');
 app.engine('html', es6Renderer)
-app.set('views', 'views')
+app.set('views', 'htmlFiles')
     //Notes: consider learning ejs or pug for view engines!!
 app.set('view engine', 'html')
+
+app.get('/',(req,res)=>{
+    res.render('index',{
+        locals: {
+            message: "Its time for lunch.",
+        }, 
+        partials: {
+            navbar: './navbar'
+        }
+    });
+})
+
+
 
 app.use(express.urlencoded({extended: true}));    
 app.use((req, res, next)=>{
