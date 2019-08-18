@@ -29,13 +29,13 @@ async function getAll(){
         return []
     }
 }
-async function createTodo({priority,task,user_id}){
+async function createTodo({task,user_id}){
     const newTodo = await db.one(`
         INSERT INTO todos
-            (priority, task, user_id)
-        values ($1, $2, $3)
-        returning *
-    `, [priority, task, user_id])
+            (task, user_id)
+        values ($1, $2)
+        returning id
+    `, [task, user_id])
     console.log(newTodo);
     return newTodo
 }

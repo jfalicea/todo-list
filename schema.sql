@@ -5,7 +5,7 @@ create table users(
 );
 create table todos (
     id serial primary key, 
-    priority integer not null, 
+    priority integer , 
     task varchar(50) not null,
     status boolean default false, 
     user_id integer references users(id)
