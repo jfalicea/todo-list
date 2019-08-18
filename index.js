@@ -1,24 +1,4 @@
 /*------------------------------------------
-* ORIGINAL Way to handle HTTP Requests
-------------------------------------------*/
-// const http = require(`http`);
-// const Todo = require('./models/Todo')
-
-
-/*------------------------------------------
-HOW TO CREATE A SERVER WITHOUT EXPRESS. 
-------------------------------------------*/
-// const server = http.createServer((request, response)=>{
-//     const allTodos = Todo.getAll()
-    
-//     allTodos.then((data)=>{ 
-//         let jsonData = JSON.stringify(data[0].task)
-//         response.end("Task: "+jsonData);
-//     });
-// });
-// server.listen(3000); 
-
-/*------------------------------------------
 * HOW TO USE EXPRESS.js
 ------------------------------------------*/
 const express = require('express'); // replace http with 'express'
