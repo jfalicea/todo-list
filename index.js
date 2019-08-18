@@ -30,7 +30,6 @@ template sites
 app.get('/',(req,res)=>{
     res.render('index',{
         locals: {
-            message: "Its time for lunch.",
         }, 
         partials: {
             navbar: './navbar',
