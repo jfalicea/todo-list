@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: true}));
 /*----------------
 sanitize information: 
 Use the urlencoded middleware to read POST bodies
-----------------*/    
+------------------------------------------*/
 const {sanitizeBody} = require('express-validator');
         // templating language. 
 const es6Renderer = require('express-es6-template-engine');
@@ -21,15 +21,16 @@ app.set('views', 'views')
 app.set('view engine', 'html')
 /*----------------
 static assets
-----------------*/
+------------------------------------------*/
 app.use(express.static('public'));
 
 /*----------------
 template sites
-----------------*/
+------------------------------------------*/
 app.get('/',(req,res)=>{
     res.render('index',{
         locals: {
+            message: "",
         }, 
         partials: {
             navbar: './navbar',
@@ -66,9 +67,9 @@ app.get('/profile/todos',async (req,res)=>{
     })
 })
 
-/*========================================
-FORMS: 
-========================================*/
+/*------------------------------------------
+Form
+------------------------------------------*/
     //1. allow the user to GET  the form for creating a todo 
 app.get('/profile/todos/create', (req, res)=>{
     //RENDER the 'create new todo' form template
