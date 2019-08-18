@@ -26,6 +26,8 @@ const Todo = require('./models/Todo')
 const Users = require('./models/Users')
 const app = express();    //create the server and call it "app"  
 const port = 3000;  //variable for the port number. 
+app.use(express.urlencoded({extended: true}));    
+
 /*----------------
 sanitize information: 
 Use the urlencoded middleware to read POST bodies
@@ -71,9 +73,13 @@ app.get('/profile',(req, res)=>{
     })
 })
 
-app.use('/profile/todos',(req,res)=>{
+app.get('/profile/todos',async (req,res)=>{
+    const userID = 1;
+    const theUser = await Users.getOne(userID);
     res.render('todoPage', {
-        locals: {},
+        locals: {
+            todos: theUser.todos,
+        },
         partials: {
             navbar: './navbar',
             includes: './includes'
@@ -81,7 +87,30 @@ app.use('/profile/todos',(req,res)=>{
     })
 })
 
-app.use(express.urlencoded({extended: true}));    
+/*========================================
+FORMS: 
+========================================*/
+    //1. allow the user to GET  the form for creating a todo 
+app.get('/profile/todos/create', (req, res)=>{
+    //RENDER the 'create new todo' form template
+    res.render('create-todo', {
+        partials: {
+            navbar: './navbar',
+            includes: './includes'
+        }
+    })
+});
+    //2. Process the body of the form they POST
+app.post('/profile/todos/create',[
+    sanitizeBody('task').escape(),
+] ,async (req, res)=>{
+        console.log("hello", req.body.task)
+    //normally we dont include the user id in the form.  when you log into a sit, it keeps trakof your id for you. 
+    const taskID = await Todo.createTodo(req.body);    
+    res.send(taskID)
+});
+
+
 app.use((req, res, next)=>{
     console.log('I AM MIDDLEWARE.');
     console.log(req.url);
@@ -107,7 +136,6 @@ app.get('/todos',(request, response)=>{
         response.json(data);
     })
 });
-
 app.get('/users',async(req, res)=>{
     const allUsers = await Users.getAll();
     res.json(allUsers);
@@ -117,8 +145,7 @@ app.get('/users/:userId',async (req, res)=>{
     const aUser = await Users.getOne(theId);
     res.json(aUser);
 });
-
-app.post('/users', [
+app.post('/users',[
     sanitizeBody('username').escape(),
     sanitizeBody('displayname').escape()
 ],async(req, res)=>{
