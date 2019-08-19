@@ -8,3 +8,40 @@ h1{
 li{
     color: red
 }
+
+#profile-summary {
+    display: flex;
+    border: 1px black solid; 
+}
+
+#navbar{
+    list-style-type: none;display:flex; justify-content: space-around;
+}
+
+#topbar{
+    background-color: crimson;
+    border: 1px black solid;
+    box-shadow: 0px 0px 10px;
+}
+
+#task-list{
+    display: flex;
+
+}
+#task-list>table{
+    margin: auto;
+}
+#tasks{
+    border: 1px black solid;
+    padding: 10px
+}
+#button-tasks{
+    display: flex;
+}
+#button-tasks{
+    margin: auto;
+}
+button{
+    border-radius: 5px; 
+    border: 2px black solid;
+}

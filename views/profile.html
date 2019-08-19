@@ -9,7 +9,21 @@
 </head>
 <body>
         ${navbar}
-        <h1>Display Name: ${displayname}</h1>
-        <h1>Username: ${username}</h1> 
+        <div id='profile-summary'>
+            <div id='contact information'>
+                <h2>
+                    Display Name: ${displayname}
+                </h2>
+                <h3>
+                    Username: ${username}
+                </h3> 
+            </div>
+            <div id='button-tasks'>
+                    <a href='/profile/todos'><button>See All Tasks</button></a>
+                    <a href='/profile/todos/create'><button href='/profile/todos'>Add a Task</button></a>
+            
+            </div>
+        </div>    
+  
 </body>
 </html>

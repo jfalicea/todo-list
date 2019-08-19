@@ -87,7 +87,7 @@ app.post('/profile/todos/create',[
         console.log("hello", req.body.task)
     //normally we dont include the user id in the form.  when you log into a sit, it keeps trakof your id for you. 
     const taskID = await Todo.createTodo(req.body);    
-    res.send(taskID)
+    res.redirect(`/profile/todos`)
 });
 
 

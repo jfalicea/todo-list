@@ -6,17 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Todos</title>
     ${includes}
-
 </head>
 <body>
     ${navbar}
-    <ul>
-        ${
-            todos.map((t)=>{
-                return `<li>${t.priority}   ${t.task}   
-                Status: ${t.status}</li>`
-            }).join('')
-        }
-    </ul>        
+    <h2>
+        Tasks:
+    </h2>
+    <a href='/profile/todos/create'><button href='/profile/todos'>Add a Task</button></a>
+    <div id='task-list'>
+        <table id='tasks'>
+            <tr>
+                <th>Priority</th>
+                <th>Task</th>
+                <th>Status</th>
+            </tr>
+            ${
+                todos.map((t)=>{
+                    return `
+                <tr>
+                    <td>${t.priority}</td>
+                    <td>${t.task}</td> 
+                    <td>${t.status}</td>
+                </tr>`
+                }).join('')
+            }
+    </table>   
+    </div>    
 </body>
 </html>
